@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Include meta tag to ensure proper rendering and touch zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kidz Learning Cursive Writting -Sharayu</title>
+  <!-- Include jQuery Mobile stylesheets -->
+  <style type="text/css">
+
+    #parentDiv{
+      
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #header{
+      position: absolute;
+      height: 10%;
+      width: 100%;
+      background-color: #00bcd4;
+      text-align: center;
+      font-family: fantasy;
+      font-size: 40px;
+    }
+
+    #footer{
+     position: absolute;
+      height: 10%;
+      width: 100%;
+      background-color: #00bcd4; 
+      bottom: 0;
+      text-align: right;
+      font-family: fantasy;
+    }
+    
+    #appContent{
+      position:absolute;
+      top: 10%;
+      height: 80%;
+      width: 100%;
+      background-color: #8bc34a;
+      padding-top: 13%;
+    }
+
+    .char{
+      float: left;
+      height: 16%;
+      border: 1px solid;
+      margin: 2px;
+      padding: 6.5%;
+      text-align: center;
+      background-color: #7fff00;
+    }
+    #charAnimationPopup{
+      height: 92%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #FFF;
+    }
+
+    #charImg{
+      width: 99%;
+      border: 2px solid red;
+      border-radius: 5px;
+    }
+
+    #charAnimationPopup #closeMe{
+      width: 20px;
+      background-color: red;
+      text-align: center;
+      height: 20px;
+      float: right;
+    }
+
+    .charList{
+      width: 90%;
+      height: 12%;
+      display:flex;
+      justify-content: space-between;
+      margin:auto;
+    }
+
+     #appLogo {
+      height: 100%;
+      width: 20%;
+      background-image: url(app-logo.png);
+      background-size: 100% 100%;
+    }
+
+    #appTitle{
+      position: absolute;
+      display: inherit;
+      top: 0;
+      right: 10px;
+    }
+   
+
+  </style>
+</head>
+<body>
+
+  <div id="parentDiv" style='background-color:red; height:100%;width:100%;position:absolute'>
+    <div id="header"><div id="appLogo"></div><div id="appTitle">Cursive Writting</div></div>
+    <div id="appContent">
+      <div id="charList0" class="charList"></div>
+      <div id="charAnimationPopup">
+        <div id="closeMe">X</div>
+        <img id="charImg" />
+      </div>
+    </div>
+    <div id="footer"><br>by Sharayu Mirgal &nbsp;&nbsp;</div>
+  </div>
+
+
+  <!-- Include the jQuery library -->
+  <script src="jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    var config = {
+        "chars":["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
+        "batchElmCount":4
+    }
+
+    //
+    $(document).ready(function(){
+      console.log("document is ready");
+      //Default //
+      $("#charAnimationPopup").hide();
+      
+      //
+      var batchElmCount = 5;
+      var index = batchID = 0;
+      $.each(config.chars, function(i, _char){
+        
+        index++;
+
+        var chars = $('<div data-char='+_char+' class="char '+_char+'">'+String(_char).toUpperCase()+'</div>');
+        $("#charList"+batchID).append(chars);
+
+        //
+        if(index == config.batchElmCount){
+          index = 0;
+          batchID++;
+          
+          //
+          $("#appContent").append('<div id="charList'+batchID+'" class="charList"></div>');
+        }
+      });
+
+      //
+      $(".char").on("click", function(){
+        //
+        var char = $(this).data("char");
+        char.toUpperCase();
+        $("#charImg").attr("src",char.toUpperCase()+".gif");
+        
+        //
+        $("#charAnimationPopup").slideDown();
+        $("#charImg").css("margin-top",Number($("#appContent").height() - $("#charImg").width()) / 2);
+      });
+
+      $("#charAnimationPopup #closeMe").on("click", function(){
+          $("#charAnimationPopup").slideUp();
+      })
+
+      //
+      
+      
+      //
+      
+      //
+
+    });
+  </script>
+
+</body>
+</html>
