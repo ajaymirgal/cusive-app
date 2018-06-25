@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.phonegap.cusive-app"
+    versionCode = "10"
+    version     = "1.0.0" >
+
+<!-- versionCode is optional and Android only -->
+
+  <name>Cusive App</name>
+
+  <description>
+      cusive-app-v2
+  </description>
+
+  <author href="https://build.phonegap.com" email="support@phonegap.com">
+      Ajay Mirgal
+  </author>
+
+</widget>

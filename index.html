@@ -24,6 +24,7 @@
       text-align: center;
       font-family: fantasy;
       font-size: 40px;
+      box-shadow: 191px 60px 20px #3f51b59c inset;
     }
 
     #footer{
@@ -34,6 +35,8 @@
       bottom: 0;
       text-align: right;
       font-family: fantasy;
+          background-image: url(appbg.jpg);
+          box-shadow: 5px 10px 20px #3f51b59c inset;
     }
     
     #appContent{
@@ -43,38 +46,91 @@
       width: 100%;
       background-color: #8bc34a;
       padding-top: 13%;
+      background-image: url(appbg.jpg);
+          box-shadow: 16px 19px 20px #3f51b59c inset;
     }
 
-    .char{
+    .char {
       float: left;
-      height: 16%;
-      border: 1px solid;
+      height: 86%;
+      border: 1px solid #FF9800;
       margin: 2px;
-      padding: 6.5%;
+      /* padding: 6.5%; */
       text-align: center;
-      background-color: #7fff00;
+      background-color: #03a9f4f5;
+      width: -webkit-fill-available;
+      line-height: 2;
+      font-size: 26px;
+      border-radius: 4px;
+      color: #FFEB3B;
+      box-shadow: 5px 10px 20px #3f51b59c inset;
     }
+
     #charAnimationPopup{
       height: 92%;
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      background-color: #FFF;
+      background-image: url(appbg.jpg);
     }
 
     #charImg{
-      width: 99%;
+      width: 97%;
       border: 2px solid red;
       border-radius: 5px;
+      margin-left: 1%;
+      box-shadow: 5px 10px 18px #FF9800;
+    }
+
+    .box {
+        width: 70%;
+        height: 200px;
+        background: #FFF;
+        margin: 40px auto;
     }
 
     #charAnimationPopup #closeMe{
-      width: 20px;
-      background-color: red;
+      width: 64px;
       text-align: center;
-      height: 20px;
+      height: 24px;
       float: right;
+      background-color: #2196f378;
+      font-size: 22px;
+      margin-right: 5px;
+      margin-top: 5px;
+      padding: 3px;
+      border-radius: 4px;
+      box-shadow: 5px 10px 20px #03A9F4 inset;
+    }
+
+    #charAnimationPopup #back-btn{
+      width: 50px;
+      text-align: left;
+      height: 50px;
+      float: left;
+      background-image: url(Previous.png);
+      background-size: 50% 50%;
+      line-height: 24px;
+      font-size: 30px;
+      background-repeat: no-repeat;
+      background-position-x: 25px;
+      color: #FFEB3B;
+      margin-left: 5px;
+    }
+
+    #charAnimationPopup #next-btn{
+      width: 50px;
+      text-align: right;
+      height: 50px;
+      float: right;
+      background-image: url(Next-icon.png);
+      background-size: 50% 50%;
+      line-height: 27px;
+      font-size: 30px;
+      background-repeat: no-repeat;
+      margin-right: 5px;
+      color: #FFEB3B;
     }
 
     .charList{
@@ -90,13 +146,56 @@
       width: 20%;
       background-image: url(app-logo.png);
       background-size: 100% 100%;
+      box-shadow: 5px 10px 20px #FF9800 inset;
     }
 
     #appTitle{
       position: absolute;
       display: inherit;
       top: 0;
+      right: 6px;
+      background-image: url(appbg.jpg);
+      color: chartreuse;
+    }
+
+    .transition{
+      -webkit-transition: visible 2s; /* Safari */
+      transition: visibli 2s;
+    }
+
+    .effect5
+    {
+      position: relative;
+    }
+    .effect5:before, .effect5:after
+    {
+      z-index: -1;
+      position: absolute;
+      content: "";
+      bottom: 25px;
+      left: 10px;
+      width: 50%;
+      top: 80%;
+      max-width:300px;
+      background: #777;
+      -webkit-box-shadow: 0 35px 20px #777;
+      -moz-box-shadow: 0 35px 20px #777;
+      box-shadow: 0 35px 20px #777;
+      -webkit-transform: rotate(-8deg);
+      -moz-transform: rotate(-8deg);
+      -o-transform: rotate(-8deg);
+      -ms-transform: rotate(-8deg);
+      transform: rotate(-8deg);
+    }
+    .effect5:after
+    {
+      -webkit-transform: rotate(8deg);
+      -moz-transform: rotate(8deg);
+      -o-transform: rotate(8deg);
+      -ms-transform: rotate(8deg);
+      transform: rotate(8deg);
       right: 10px;
+      left: auto;
     }
    
 
@@ -109,11 +208,13 @@
     <div id="appContent">
       <div id="charList0" class="charList"></div>
       <div id="charAnimationPopup">
-        <div id="closeMe">X</div>
-        <img id="charImg" />
+        <div id="closeMe">Close</div>
+        <img id="charImg"  class="effect5"/>
+        <div id="back-btn">A</div>
+        <div id="next-btn">C</div>
       </div>
     </div>
-    <div id="footer"><br>by Sharayu Mirgal &nbsp;&nbsp;</div>
+    <div id="footer"><br>For SHARAYU MIRGAL &nbsp;&nbsp;</div>
   </div>
 
 
@@ -126,19 +227,20 @@
     }
 
     //
+    var currentIndex = 0;
     $(document).ready(function(){
-      console.log("document is ready");
       //Default //
       $("#charAnimationPopup").hide();
       
       //
       var batchElmCount = 5;
       var index = batchID = 0;
+
       $.each(config.chars, function(i, _char){
         
         index++;
 
-        var chars = $('<div data-char='+_char+' class="char '+_char+'">'+String(_char).toUpperCase()+'</div>');
+        var chars = $('<div data-id='+i+' data-char='+_char+' class="char '+_char+'">'+String(_char).toUpperCase()+'</div>');
         $("#charList"+batchID).append(chars);
 
         //
@@ -155,17 +257,78 @@
       $(".char").on("click", function(){
         //
         var char = $(this).data("char");
+        currentIndex = $(this).data("id");
         char.toUpperCase();
         $("#charImg").attr("src",char.toUpperCase()+".gif");
         
         //
         $("#charAnimationPopup").slideDown();
-        $("#charImg").css("margin-top",Number($("#appContent").height() - $("#charImg").width()) / 2);
+        $("#charImg").css("margin-top",Number(Number($("#appContent").height() - $("#charImg").width()) / 2) - 50);
+
+        //
+        setNavChar(currentIndex);
       });
 
       $("#charAnimationPopup #closeMe").on("click", function(){
           $("#charAnimationPopup").slideUp();
-      })
+      });
+
+      $("#charAnimationPopup #next-btn").on("click", function(){
+          if(currentIndex == 25){
+            $("#charAnimationPopup").slideUp();
+            return;
+          }
+          currentIndex++;
+
+          var char = config.chars[currentIndex];//$(this).data("char");
+          char.toUpperCase();
+          $("#charImg").attr("src",char.toUpperCase()+".gif");
+
+          //
+          setNavChar(currentIndex);
+      });
+
+      $("#charAnimationPopup #back-btn").on("click", function(){
+          //
+          if(currentIndex == 0){
+            $("#charAnimationPopup").slideUp();
+            return;
+          }
+          currentIndex--;
+          var char = config.chars[currentIndex];//$(this).data("char");
+          char.toUpperCase();
+          $("#charImg").attr("src",char.toUpperCase()+".gif");
+
+          //
+          setNavChar(currentIndex);
+      });
+
+      function setNavChar(_currentCharId){
+          
+          //
+          var prevCharId = _currentCharId;
+          var nextCharId = _currentCharId;
+
+          //
+          if(_currentCharId > 0){
+            //
+            prevCharId-- //#next-btn
+          }
+
+          //
+          if(_currentCharId < 25){
+            //
+            nextCharId++ //#next-btn
+          }
+          
+          console.log(prevCharId+" Prev "+String(config.chars[prevCharId]).toUpperCase());
+          console.log(nextCharId+" Next "+String(config.chars[nextCharId]).toUpperCase());
+
+          $("#back-btn").html(String(config.chars[prevCharId]).toUpperCase());
+          $("#next-btn").html(String(config.chars[nextCharId]).toUpperCase());
+      }
+
+      
 
       //
       
